@@ -21,7 +21,10 @@ export const POST = async (req: NextRequest) => {
     }
 
     const newCustomer = await prisma.customer.create({
-      data,
+      data: {
+        ...data,
+        userId: "cm35n1amz000012i5okizpc72",
+      },
     });
 
     return NextResponse.json(newCustomer, { status: 201 });
