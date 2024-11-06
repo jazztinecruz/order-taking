@@ -1,7 +1,4 @@
-import api from "@/core/api";
-
-const Home = async () => {
-  const users = await api.query.users.single();
+const Home = () => {
   return <div>Home</div>;
 };
 

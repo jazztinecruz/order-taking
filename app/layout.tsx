@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@/core/styles/globals.css";
 import Providers from "@/core/providers";
+import Sidebar from "@/core/components/sidebar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,7 +29,12 @@ const RootLayout = ({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen border-4 border-red-400">
+            <Sidebar />
+            <main>{children}</main>
+          </div>
+        </Providers>
       </body>
     </html>
   );
