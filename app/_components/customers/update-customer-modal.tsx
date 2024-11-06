@@ -5,16 +5,20 @@ import Button from "@/core/components/button";
 import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
 import { OmittedCustomer } from "@/core/types";
+import { Customer } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type Props = {
-  customer: OmittedCustomer;
+  customer: Customer;
 };
 
 const UpdateCustomerModal = ({ customer }: Props) => {
-  const [customerData, setCustomerData] = useState<OmittedCustomer>(customer);
+  const [customerData, setCustomerData] = useState({
+    ...customer,
+    isActive: customer.isActive || false,
+  });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -37,11 +41,11 @@ const UpdateCustomerModal = ({ customer }: Props) => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCustomerData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value, type, checked } = e.target;
+    setCustomerData({
+      ...customerData,
+      [name]: type === "checkbox" ? checked : value,
+    });
   };
 
   return (
@@ -84,6 +88,15 @@ const UpdateCustomerModal = ({ customer }: Props) => {
             placeholder="New York"
             onChange={handleChange}
             required
+          />
+
+          <Input
+            label={customer.isActive ? "Deactivate" : "Activate"}
+            id="isActive"
+            name="isActive"
+            type="checkbox"
+            checked={customerData.isActive}
+            onChange={handleChange}
           />
 
           <Button onClick={(e) => handleUpdateCustomer(e)} disabled={isPending}>

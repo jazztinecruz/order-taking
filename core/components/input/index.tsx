@@ -6,6 +6,19 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const Input: React.FC<InputProps> = ({ label, id, ...props }) => {
+  if (props.type === "checkbox") {
+    return (
+      <div className="flex items-center gap-2">
+        <input
+          id={id}
+          {...props}
+          className="p-2 border border-gray-300 rounded-md"
+        />
+        <label htmlFor={id}>{label}</label>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-1">

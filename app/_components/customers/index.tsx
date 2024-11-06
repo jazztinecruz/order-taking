@@ -37,7 +37,7 @@ const CustomersRecord = ({ customers }: Props) => {
               <TableCell>{`${customer.firstName} ${customer.lastName}`}</TableCell>
               <TableCell>{customer.phoneNumber}</TableCell>
               <TableCell>{customer.city}</TableCell>
-              <TableCell>{customer.isActive ? "Active" : "Inactive"}</TableCell>
+              <TableCell>{customer.isActive ? "TRUE" : "FALSE"}</TableCell>
               <TableCell>
                 <UpdateCustomerModal customer={customer} />
               </TableCell>
