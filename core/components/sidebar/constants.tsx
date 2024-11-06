@@ -10,7 +10,7 @@ export const SIDEBARLINKS: SidebarLink[] = [
   },
   {
     title: "SKU",
-    url: "/sku",
+    url: "/products",
   },
   {
     title: "Orders",

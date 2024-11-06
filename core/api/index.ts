@@ -5,11 +5,13 @@ import updateCustomer from "./customer/update-customer";
 import { OmittedCustomer, OmittedProduct } from "../types";
 import addProduct from "./product/add-product";
 import updateProduct from "./product/update-product";
+import getProducts from "./product/get-multiple";
 
 const api = {
   query: {
     getCustomer: (id: string) => getCustomer(id),
     getCustomers: () => getCustomers(),
+    getProducts: () => getProducts(),
   },
   mutation: {
     addCustomer: ({ data }: { data: OmittedCustomer }) => addCustomer({ data }),

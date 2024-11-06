@@ -9,17 +9,14 @@ import {
 } from "@nextui-org/react";
 import type { Customer } from "@prisma/client";
 import { CUSTOMERTABLEHEADERS } from "../constants";
-import CreateCustomerModal from "./create-customer-modal";
-import UpdateCustomerModal from "./update-customer-modal";
-import { useState } from "react";
-import Button from "@/core/components/button";
+import CreateCustomerModal from "../create-customer-modal";
+import UpdateCustomerModal from "../update-customer-modal";
 
 type Props = {
   customers: Customer[];
 };
 
 const CustomersRecord = ({ customers }: Props) => {
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   return (
     <div className="space-y-6">
       <CreateCustomerModal />

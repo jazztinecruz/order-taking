@@ -91,7 +91,7 @@ const UpdateCustomerModal = ({ customer }: Props) => {
           />
 
           <Input
-            label={customer.isActive ? "Deactivate" : "Activate"}
+            label="Active"
             id="isActive"
             name="isActive"
             type="checkbox"

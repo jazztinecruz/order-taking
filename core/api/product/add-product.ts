@@ -6,8 +6,15 @@ const addProduct = async ({ data }: { data: OmittedProduct }) => {
   try {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/add-product`;
 
+    const newProductData = {
+      data: {
+        ...data,
+        unitPrice: Number(data.unitPrice),
+      },
+    };
+
     const newProduct: Product = await axios
-      .post(URL, { data })
+      .post(URL, newProductData)
       .then((res) => res.data);
 
     return newProduct;
