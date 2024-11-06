@@ -32,7 +32,7 @@ const RootLayout = ({
         <Providers>
           <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen border-4 border-red-400">
             <Sidebar />
-            <main>{children}</main>
+            <main className="p-4">{children}</main>
           </div>
         </Providers>
       </body>

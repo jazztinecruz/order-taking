@@ -5,8 +5,8 @@ type SidebarLink = {
 
 export const SIDEBARLINKS: SidebarLink[] = [
   {
-    title: "Customer",
-    url: "/customers",
+    title: "Customers",
+    url: "/",
   },
   {
     title: "SKU",
