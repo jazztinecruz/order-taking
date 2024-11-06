@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma";
-import { User } from "@prisma/client";
+import type { Customer } from "@prisma/client";
 
 export const PUT = async (req: NextRequest) => {
   const body = await req.json();
-  const { data } = body as { data: User };
+  const { data } = body as { data: Customer };
 
   try {
-    const existingPhoneNumber = await prisma.user.findFirst({
+    const existingPhoneNumber = await prisma.customer.findFirst({
       where: {
         phoneNumber: data.phoneNumber,
         NOT: {
@@ -23,14 +23,14 @@ export const PUT = async (req: NextRequest) => {
       );
     }
 
-    const updatedUser = await prisma.user.update({
+    const updatedCustomer = await prisma.customer.update({
       where: {
         id: data.id,
       },
       data,
     });
 
-    return NextResponse.json(updatedUser, { status: 201 });
+    return NextResponse.json(updatedCustomer, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(error, { status: 500 });

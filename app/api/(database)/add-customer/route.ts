@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/prisma";
-import type { User } from "@prisma/client";
+import type { Customer } from "@prisma/client";
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-  const { data } = body as { data: User };
+  const { data } = body as { data: Customer };
 
   try {
-    const existingPhoneNumber = await prisma.user.findUnique({
+    const existingPhoneNumber = await prisma.customer.findUnique({
       where: {
         phoneNumber: data.phoneNumber,
       },
@@ -20,11 +20,11 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const newUser = await prisma.user.create({
+    const newCustomer = await prisma.customer.create({
       data,
     });
 
-    return NextResponse.json(newUser, { status: 201 });
+    return NextResponse.json(newCustomer, { status: 201 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(error, { status: 500 });

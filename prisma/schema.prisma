@@ -13,14 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Customer {
   id          String   @id @default(cuid())
   firstName   String
   lastName    String
   phoneNumber Int      @unique
   city        String
   isActive    Boolean  @default(true)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
   createdAt   DateTime @default(now())
   createdBy   String?  @default("system")
   timestamp   DateTime @default(now())
+}
+
+model User {
+  id       String     @id @default(cuid())
+  email    String     @unique
+  Customer Customer[]
 }

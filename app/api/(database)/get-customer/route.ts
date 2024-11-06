@@ -6,17 +6,20 @@ export const GET = async (req: NextRequest) => {
   const id = String(searchParams.get("id"));
 
   try {
-    const user = await prisma.user.findUnique({
+    const customer = await prisma.customer.findUnique({
       where: {
         id,
       },
     });
 
-    if (!user) {
-      return NextResponse.json({ message: "User not found" }, { status: 404 });
+    if (!customer) {
+      return NextResponse.json(
+        { message: "Customer not found" },
+        { status: 404 }
+      );
     }
 
-    return NextResponse.json(user, { status: 200 });
+    return NextResponse.json(customer, { status: 200 });
   } catch (error) {
     console.error(error);
     return NextResponse.json(error, { status: 500 });
