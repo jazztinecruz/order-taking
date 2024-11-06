@@ -14,17 +14,17 @@ datasource db {
 }
 
 model Customer {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   firstName   String
   lastName    String
-  phoneNumber Int      @unique
+  phoneNumber String    @unique
   city        String
-  isActive    Boolean  @default(true)
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
-  createdAt   DateTime @default(now())
-  createdBy   String?  @default("system")
-  timestamp   DateTime @default(now())
+  user        User      @relation(fields: [userId], references: [id])
+  isActive    Boolean?  @default(true)
+  createdAt   DateTime? @default(now())
+  createdBy   String?   @default("system")
+  timestamp   DateTime? @default(now())
 }
 
 model User {
