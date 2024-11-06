@@ -1,8 +1,7 @@
 import api from "@/core/api";
 
 const Home = async () => {
-  const users = await api.users.single();
-  console.log(users);
+  const users = await api.query.users.single();
   return <div>Home</div>;
 };
 

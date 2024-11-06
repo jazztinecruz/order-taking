@@ -17,10 +17,10 @@ model User {
   id          String   @id @default(cuid())
   firstName   String
   lastName    String
-  phoneNumber String
+  phoneNumber Int      @unique
   city        String
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
-  createdBy   String
+  createdBy   String?  @default("system")
   timestamp   DateTime @default(now())
 }
