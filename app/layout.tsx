@@ -28,12 +28,12 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Providers>
-          <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen">
-            <Sidebar />
-            <main className="p-4 relative">{children}</main>
-          </div>
-        </Providers>
+        <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen">
+          <Sidebar />
+          <main className="p-4">
+            <Providers>{children}</Providers>
+          </main>
+        </div>
       </body>
     </html>
   );
