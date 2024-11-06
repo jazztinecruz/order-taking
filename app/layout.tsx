@@ -30,7 +30,7 @@ const RootLayout = ({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers>
-          <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen border-4 border-red-400">
+          <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen">
             <Sidebar />
             <main className="p-4">{children}</main>
           </div>
