@@ -11,7 +11,7 @@ const Modal = ({ children, title, isOpen, onClose }: Props) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center m-0 z-50">
+    <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center m-0 z-50">
       <div className="bg-white p-6 rounded-lg shadow border w-full max-w-3xl space-y-4 ">
         <button onClick={onClose} className="hover:underline">
           x Close

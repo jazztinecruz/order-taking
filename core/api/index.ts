@@ -12,7 +12,8 @@ const api = {
   },
   mutation: {
     addCustomer: ({ data }: { data: OmittedCustomer }) => addCustomer({ data }),
-    updateCustomer: ({ data }: { data: Customer }) => updateCustomer({ data }),
+    updateCustomer: ({ data }: { data: OmittedCustomer }) =>
+      updateCustomer({ data }),
   },
 };
 

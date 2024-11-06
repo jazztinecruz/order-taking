@@ -27,7 +27,10 @@ export const PUT = async (req: NextRequest) => {
       where: {
         id: data.id,
       },
-      data,
+      data: {
+        ...data,
+        userId: "cm35n1amz000012i5okizpc72",
+      },
     });
 
     return NextResponse.json(updatedCustomer, { status: 201 });
