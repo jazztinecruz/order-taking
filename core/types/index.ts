@@ -1,6 +1,11 @@
-import { Customer } from "@prisma/client";
+import { Customer, Product } from "@prisma/client";
 
 export type OmittedCustomer = Omit<
   Customer,
+  "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
+>;
+
+export type OmittedProduct = Omit<
+  Product,
   "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
 >;

@@ -31,4 +31,18 @@ model User {
   id       String     @id @default(cuid())
   email    String     @unique
   Customer Customer[]
+  Product  Product[]
+}
+
+model Product {
+  id        String    @id @default(cuid())
+  name      String    @unique
+  code      String    @unique
+  unitPrice Float
+  userId    String?
+  isActive  Boolean?  @default(true)
+  createdAt DateTime? @default(now())
+  createdBy String?   @default("system")
+  timestamp DateTime? @default(now())
+  User      User?     @relation(fields: [userId], references: [id])
 }
