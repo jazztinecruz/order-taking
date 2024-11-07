@@ -6,18 +6,22 @@ import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
 import { OmittedProduct } from "@/core/types";
 import { useMutation } from "@tanstack/react-query";
+import { PutBlobResult } from "@vercel/blob";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 
 const initialProductData: OmittedProduct = {
   name: "",
   code: "",
   unitPrice: "",
+  imageUrl: "",
 };
 
 const CreateProductModal = () => {
   const [productData, setProductData] =
     useState<OmittedProduct>(initialProductData);
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const router = useRouter();
@@ -47,6 +51,28 @@ const CreateProductModal = () => {
     }));
   };
 
+  const handleUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    event.preventDefault();
+
+    if (!inputFileRef.current?.files) {
+      throw new Error("No file selected");
+    }
+
+    const file = inputFileRef.current.files[0];
+
+    const response = await fetch(`/api/storage?filename=${file.name}`, {
+      method: "POST",
+      body: file,
+    });
+
+    const newBlob = (await response.json()) as PutBlobResult;
+
+    setProductData((prevState) => ({
+      ...prevState,
+      imageUrl: newBlob.url,
+    }));
+  };
+
   return (
     <>
       <Button onClick={() => setIsCreateModalOpen(true)}>Add Product</Button>
@@ -54,7 +80,14 @@ const CreateProductModal = () => {
         title="Create Product"
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}>
-        <form className="space-y-4">
+        <div className="space-y-4">
+          <input
+            name="file"
+            ref={inputFileRef}
+            type="file"
+            required
+            onChange={handleUpload}
+          />
           <Input
             label="Name"
             id="name"
@@ -82,7 +115,7 @@ const CreateProductModal = () => {
           <Button onClick={(e) => handleAddProduct(e)} disabled={isPending}>
             Create Product
           </Button>
-        </form>
+        </div>
       </Modal>
     </>
   );

@@ -8,7 +8,9 @@ export type OmittedCustomer = Omit<
 export type OmittedProduct = Omit<
   Product,
   "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
->;
+> & {
+  imageUrl?: string;
+};
 
 export type OptionalOrderFields = Partial<Order>;
 

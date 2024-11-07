@@ -11,6 +11,7 @@ import type { Product } from "@prisma/client";
 import CreateProductModal from "./create-product-modal";
 import UpdateProductModal from "./update-product-modal";
 import { PRODUCTTABLEHEADERS } from "@/core/constants/table";
+import Image from "next/image";
 
 type Props = {
   products: Product[];
@@ -35,7 +36,14 @@ const ProductsRecord = ({ products }: Props) => {
               <TableCell>{product.code}</TableCell>
               <TableCell>{product.unitPrice}</TableCell>
               <TableCell>{product.isActive ? "TRUE" : "FALSE"}</TableCell>
-              <TableCell>Image</TableCell>
+              <TableCell>
+                <Image
+                  src={product.imageUrl || "/no-image.png"}
+                  alt={product.name}
+                  width={50}
+                  height={50}
+                />
+              </TableCell>
               <TableCell>
                 <UpdateProductModal product={product} />
               </TableCell>

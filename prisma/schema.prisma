@@ -43,6 +43,7 @@ model Product {
   code       String      @unique
   unitPrice  String
   userId     String?
+  imageUrl   String?
   isActive   Boolean?    @default(true)
   createdAt  DateTime?   @default(now())
   createdBy  String?     @default("system")
