@@ -56,10 +56,7 @@ const UpdateOrderItem = ({ orderItem, order, refetchOrder }: Props) => {
         updateOrder({
           id: order.id,
           totalAmount: String(
-            order.OrderItems.reduce(
-              (acc, _) => acc + Number(data?.totalPrice),
-              0
-            )
+            order.OrderItems.reduce((acc) => acc + Number(data?.totalPrice), 0)
           ),
         });
       },

@@ -10,12 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { OrderItem } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import AddNewOrderItem from "./add-order-item-modal";
 import UpdateOrderItem from "./update-order-item-modal";
-import { ExtededOrderItem, OmittedOrderItem } from "@/core/types";
+import { ExtededOrderItem } from "@/core/types";
 
 const OrderItems = () => {
   const params = useParams();
