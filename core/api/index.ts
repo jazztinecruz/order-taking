@@ -26,7 +26,7 @@ const api = {
     addProduct: ({ data }: { data: OmittedProduct }) => addProduct({ data }),
     updateProduct: ({ data }: { data: OmittedProduct }) =>
       updateProduct({ data }),
-    newOrder: ({ data }: { data: Order }) => newOrder({ data }),
+    newOrder: ({ data }: { data: Order | null }) => newOrder({ data }),
     updateOrder: ({ data }: { data: Order }) => updateOrder({ data }),
     addOrderItem: ({ data }: { data: OrderItem }) => addOrderItem({ data }),
   },

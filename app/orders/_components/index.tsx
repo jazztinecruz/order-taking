@@ -8,18 +8,37 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
-import CreateProductModal from "./new-order";
 import { ORDERSTABLEHEADERS } from "@/core/constants/table";
 import { ExtendedOrder } from "@/core/types";
+import Button from "@/core/components/button";
+import { useMutation } from "@tanstack/react-query";
+import { Order } from "@prisma/client";
+import api from "@/core/api";
+import { useRouter } from "next/navigation";
 
 type Props = {
   orders: ExtendedOrder[];
 };
 
 const OrdersRecord = ({ orders }: Props) => {
+  const router = useRouter();
+
+  const { mutate: newOrder, isPending } = useMutation({
+    mutationFn: (data: Order | null) => api.mutation.newOrder({ data }),
+    onSuccess: (data) => {
+      router.push(`/orders/${data?.id}`);
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   return (
     <div className="space-y-6">
-      <CreateProductModal />
+      <Button disabled={isPending} onClick={() => newOrder(null)}>
+        Add new order
+      </Button>
+
       <Table aria-label="Order data table">
         <TableHeader>
           {ORDERSTABLEHEADERS.map((header) => (
@@ -31,9 +50,14 @@ const OrdersRecord = ({ orders }: Props) => {
         <TableBody>
           {orders.map((order) => (
             <TableRow key={order.id}>
-              <TableCell>
-                {order.customer.firstName}, {order.customer.lastName}
-              </TableCell>
+              {order.customer ? (
+                <TableCell>
+                  {order.customer?.firstName || ""}{" "}
+                  {order.customer?.lastName || ""}
+                </TableCell>
+              ) : (
+                <TableCell> </TableCell>
+              )}
               <TableCell>
                 {order.dateOfDelivery
                   ? new Date(order.dateOfDelivery).toLocaleDateString()

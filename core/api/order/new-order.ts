@@ -1,7 +1,7 @@
 import type { Order, Product } from "@prisma/client";
 import axios from "axios";
 
-const newOrder = async ({ data }: { data: Order }) => {
+const newOrder = async ({ data }: { data: Order | null }) => {
   try {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/new-order`;
 

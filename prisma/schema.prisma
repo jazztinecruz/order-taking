@@ -61,8 +61,8 @@ model Order {
   createdAt      DateTime?    @default(now())
   createdBy      String?      @default("system")
   timestamp      DateTime?    @updatedAt
-  userId         String
-  User           User         @relation(fields: [userId], references: [id])
+  userId         String?
+  User           User?        @relation(fields: [userId], references: [id])
   isActive       Boolean?     @default(false)
   OrderItems     OrderItem[]
 }
