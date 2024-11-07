@@ -1,10 +1,10 @@
-import type { Order } from "@prisma/client";
+import type { ExtendedOrder } from "@/core/types";
 
 const getOrders = async () => {
   try {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/get-orders`;
 
-    const orders: Order[] = await fetch(URL).then((res) => res.json());
+    const orders: ExtendedOrder[] = await fetch(URL).then((res) => res.json());
     return orders;
   } catch (error) {
     console.error(error);
