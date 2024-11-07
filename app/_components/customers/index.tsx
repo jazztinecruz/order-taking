@@ -18,7 +18,7 @@ type Props = {
 
 const CustomersRecord = ({ customers }: Props) => {
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-4 items-start">
       <CreateCustomerModal />
       <Table aria-label="Customer data table">
         <TableHeader>

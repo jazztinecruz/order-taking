@@ -39,7 +39,7 @@ const OrderItems = () => {
     );
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-4 items-start">
       <AddNewOrderItem order={order} />
 
       <Table aria-label="Order data table">
