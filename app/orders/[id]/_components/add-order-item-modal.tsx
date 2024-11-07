@@ -63,11 +63,13 @@ const AddNewOrderItem = () => {
                 });
                 setSelectedProduct(products.find((p) => p.id === key));
               }}>
-              {products.map((product) => (
-                <AutocompleteItem key={product.id} value={product.name}>
-                  {product.name}
-                </AutocompleteItem>
-              ))}
+              {products
+                .filter((product) => product.isActive)
+                .map((product) => (
+                  <AutocompleteItem key={product.id} value={product.name}>
+                    {product.name}
+                  </AutocompleteItem>
+                ))}
             </Autocomplete>
           )}
           <Input

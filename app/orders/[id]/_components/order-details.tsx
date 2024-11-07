@@ -45,8 +45,11 @@ const OrderDetails = ({ customers }: Props) => {
         <Autocomplete
           label="Select Customer"
           className="max-w-xs"
+          placeholder="Select Customer"
           defaultInputValue={
-            `${order?.customer?.firstName} ${order?.customer?.lastName}` || ""
+            order?.customer
+              ? `${order.customer.firstName} ${order.customer.lastName}`
+              : "Select Customer"
           }
           onSelectionChange={(key) =>
             updateOrder({

@@ -1,7 +1,6 @@
 "use client";
 
 import api from "@/core/api";
-import Button from "@/core/components/button";
 import { ORDERITEMSTABLEHEADERS } from "@/core/constants/table";
 import {
   Table,
@@ -30,6 +29,8 @@ const OrderItems = () => {
     queryFn: () => api.query.getProducts(),
   });
 
+  if (!order?.customerId) return null;
+
   return (
     <div className="space-y-6">
       <AddNewOrderItem />
@@ -48,7 +49,6 @@ const OrderItems = () => {
               const product = products?.find(
                 (product) => product.id === orderItem.skuid
               );
-
               return (
                 <TableRow key={orderItem.id}>
                   <TableCell>{product?.name}</TableCell>

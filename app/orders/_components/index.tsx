@@ -15,6 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Order } from "@prisma/client";
 import api from "@/core/api";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 type Props = {
   orders: ExtendedOrder[];
@@ -65,7 +66,11 @@ const OrdersRecord = ({ orders }: Props) => {
               </TableCell>
               <TableCell>{order.status}</TableCell>
               <TableCell>{order.totalAmount}</TableCell>
-              <TableCell>Edit</TableCell>
+              <TableCell>
+                <Link href={`/orders/${order.id}`} className="hover:underline">
+                  Edit
+                </Link>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
