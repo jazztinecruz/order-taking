@@ -1,6 +1,5 @@
-import React from "react";
-import OrderDetails from "./_components/order-details";
-import OrderItems from "./_components/order-items";
+import OrderDetails from "./_components/order/details";
+import OrderItems from "./_components/order/items";
 
 const OrderTakingPage = () => {
   return (

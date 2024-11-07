@@ -37,63 +37,64 @@ const OrderDetails = () => {
     },
   });
 
-  if (isLoading) return <div>Fetching Order Details ...</div>;
+  if (isLoading) return <p>Fetching Order Details ...</p>;
 
   return (
     <div className="space-y-4">
-      {/* selecting customer */}
-      {customers?.length && (
+      <div className="flex items-center gap-4">
+        {customers?.length && (
+          <Autocomplete
+            label="Select Customer"
+            className="max-w-xs"
+            placeholder="Select Customer"
+            defaultInputValue={
+              order?.customer
+                ? `${order.customer.firstName} ${order.customer.lastName}`
+                : "Select Customer"
+            }
+            onSelectionChange={(key) =>
+              updateOrder({
+                id: orderId,
+                customerId: key as string,
+              })
+            }>
+            {customers
+              .filter((customer) => customer.isActive)
+              .map((customer) => {
+                const fullName = `${customer.firstName} ${customer.lastName}`;
+                return (
+                  <AutocompleteItem key={customer.id} value={fullName}>
+                    {fullName}
+                  </AutocompleteItem>
+                );
+              })}
+          </Autocomplete>
+        )}
+
         <Autocomplete
-          label="Select Customer"
+          label="Select Status"
           className="max-w-xs"
           placeholder="Select Customer"
-          defaultInputValue={
-            order?.customer
-              ? `${order.customer.firstName} ${order.customer.lastName}`
-              : "Select Customer"
-          }
+          defaultInputValue={order?.status || "Select Status"}
           onSelectionChange={(key) =>
             updateOrder({
               id: orderId,
-              customerId: key as string,
+              status: key as OrderStatus,
             })
           }>
-          {customers
-            .filter((customer) => customer.isActive)
-            .map((customer) => {
-              const fullName = `${customer.firstName} ${customer.lastName}`;
-              return (
-                <AutocompleteItem key={customer.id} value={fullName}>
-                  {fullName}
-                </AutocompleteItem>
-              );
-            })}
+          {Object.values(OrderStatus).map((status) => (
+            <AutocompleteItem key={status} value={status}>
+              {status}
+            </AutocompleteItem>
+          ))}
         </Autocomplete>
-      )}
-
-      <Autocomplete
-        label="Select Status"
-        className="max-w-xs"
-        placeholder="Select Customer"
-        defaultInputValue={order?.status || "Select Status"}
-        onSelectionChange={(key) =>
-          updateOrder({
-            id: orderId,
-            status: key as OrderStatus,
-          })
-        }>
-        {Object.values(OrderStatus).map((status) => (
-          <AutocompleteItem key={status} value={status}>
-            {status}
-          </AutocompleteItem>
-        ))}
-      </Autocomplete>
+      </div>
 
       <Input
         id="dateOfDelivery"
         label="Date of Delivery"
         type="date"
-        min={new Date(Date.now() + 86400000).toISOString().split("T")[0]} // tomorrow's date
+        min={new Date(Date.now() + 86400000).toISOString().split("T")[0]}
         defaultValue={
           order?.dateOfDelivery
             ? new Date(order.dateOfDelivery).toISOString().split("T")[0]

@@ -23,4 +23,10 @@ export const ORDERSTABLEHEADERS = [
   "Actions",
 ];
 
-export const ORDERITEMSTABLEHEADERS = ["SKU", "Quantity", "Price", "Actions"];
+export const ORDERITEMSTABLEHEADERS = [
+  "SKU",
+  "Quantity",
+  "Price",
+  "Image",
+  "Actions",
+];

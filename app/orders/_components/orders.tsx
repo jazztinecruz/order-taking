@@ -16,6 +16,7 @@ import { Order } from "@prisma/client";
 import api from "@/core/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import grabError from "@/core/util/grab-error";
 
 type Props = {
   orders: ExtendedOrder[];
@@ -30,7 +31,7 @@ const OrdersRecord = ({ orders }: Props) => {
       router.push(`/orders/${data?.id}`);
     },
     onError: (error) => {
-      console.error(error);
+      grabError(error);
     },
   });
 

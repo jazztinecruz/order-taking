@@ -1,6 +1,6 @@
 import LoadingAnimaton from "@/core/components/loading";
 
-const CustomersLoadingPage = () => {
+const OrdersLoadingPage = () => {
   return (
     <div className="space-y-4 h-screen">
       <div className="w-full h-full grid place-items-center">
@@ -10,4 +10,4 @@ const CustomersLoadingPage = () => {
   );
 };
 
-export default CustomersLoadingPage;
+export default OrdersLoadingPage;

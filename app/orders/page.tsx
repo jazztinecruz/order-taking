@@ -1,7 +1,5 @@
 import api from "@/core/api";
-import OrdersRecord from "./_components";
-
-// export const dynamic = "force-dynamic";
+import OrdersRecord from "./_components/orders";
 
 const Orders = async () => {
   const orders = await api.query.getOrders();

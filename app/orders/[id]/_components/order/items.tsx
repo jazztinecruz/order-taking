@@ -12,9 +12,10 @@ import {
 } from "@nextui-org/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
-import AddNewOrderItem from "./add-order-item-modal";
-import UpdateOrderItem from "./update-order-item-modal";
+import AddNewOrderItem from "../modals/add-order-item";
+import UpdateOrderItem from "../modals/update-order-item";
 import { ExtededOrderItem } from "@/core/types";
+import Image from "next/image";
 
 const OrderItems = () => {
   const params = useParams();
@@ -30,7 +31,12 @@ const OrderItems = () => {
     queryFn: () => api.query.getProducts(),
   });
 
-  if (!order?.customerId) return null;
+  if (!order?.customerId)
+    return (
+      <p className="italic text-gray-500">
+        ** Please select a Customer first to start taking order items. **
+      </p>
+    );
 
   return (
     <div className="space-y-6">
@@ -57,6 +63,15 @@ const OrderItems = () => {
                   <TableCell>{orderItem.quantity}</TableCell>
                   <TableCell>{orderItem.totalPrice}</TableCell>
                   <TableCell>
+                    <Image
+                      src={product?.imageUrl || "/no-image.png"}
+                      alt="Product Image"
+                      width={75}
+                      height={75}
+                      className="rounded-md"
+                    />
+                  </TableCell>
+                  <TableCell>
                     <UpdateOrderItem
                       orderItem={orderItem}
                       order={order}
@@ -71,6 +86,7 @@ const OrderItems = () => {
               <TableCell colSpan={ORDERITEMSTABLEHEADERS.length}>
                 No order items found
               </TableCell>
+              <TableCell> </TableCell>
               <TableCell> </TableCell>
               <TableCell> </TableCell>
               <TableCell> </TableCell>

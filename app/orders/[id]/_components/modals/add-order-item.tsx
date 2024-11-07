@@ -10,9 +10,11 @@ import {
   OmittedProduct,
   OptionalOrderFields,
 } from "@/core/types";
+import grabError from "@/core/util/grab-error";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 type Props = {
   order: ExtendedOrder;
@@ -41,17 +43,18 @@ const AddNewOrderItem = ({ order }: Props) => {
     mutationFn: (data: OptionalOrderFields) =>
       api.mutation.updateOrder({ data }),
     onError: (error) => {
-      console.error(error);
+      grabError(error);
     },
   });
 
   const { mutate: addOrderItem } = useMutation({
     mutationFn: (data: OmittedOrderItem) => api.mutation.addOrderItem({ data }),
     onSuccess: () => {
+      toast.success("Order Item added successfully");
       refetchProducts();
     },
     onError: (error) => {
-      console.error(error);
+      grabError(error);
     },
   });
 
@@ -66,6 +69,8 @@ const AddNewOrderItem = ({ order }: Props) => {
       ) || [];
 
   const handleAddOrderItem = () => {
+    if (!selectedProduct) return;
+
     addOrderItem(itemData);
     updateOrder({
       id: order.id,
@@ -130,6 +135,7 @@ const AddNewOrderItem = ({ order }: Props) => {
             label="Total Price"
             id="totalPrice"
             name="totalPrice"
+            type="number"
             readOnly
             value={itemData.totalPrice}
             required
