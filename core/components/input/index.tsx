@@ -3,9 +3,10 @@
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
   id: string;
+  errorMessage?: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, id, ...props }) => {
+const Input: React.FC<InputProps> = ({ label, id, errorMessage, ...props }) => {
   if (props.type === "checkbox") {
     return (
       <div className="flex items-center gap-2">
@@ -15,6 +16,7 @@ const Input: React.FC<InputProps> = ({ label, id, ...props }) => {
           className="p-2 border border-gray-300 rounded-md"
         />
         <label htmlFor={id}>{label}</label>
+        {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
       </div>
     );
   }
@@ -30,6 +32,7 @@ const Input: React.FC<InputProps> = ({ label, id, ...props }) => {
         {...props}
         className={`w-full p-2 border border-gray-300 rounded-md ${props.className}`}
       />
+      {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
     </div>
   );
 };
