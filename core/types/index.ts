@@ -11,9 +11,21 @@ export type OmittedProduct = Omit<
 >;
 
 export type OptionalOrderFields = Partial<Order>;
+
 export type ExtendedOrder = Order & {
   customer: OmittedCustomer;
-  OrderItems: OrderItem[];
+  OrderItems: (OrderItem & {
+    sku: Product;
+  })[];
 };
 
-export type OmittedOrderItem = Omit<OrderItem, "id" | "userId" | "timestamp">;
+export type ExtededOrderItem = OrderItem & {
+  sku?: Product;
+};
+
+export type OmittedOrderItem = Omit<
+  OrderItem,
+  "id" | "userId" | "timestamp"
+> & {
+  id?: string;
+};

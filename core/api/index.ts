@@ -13,10 +13,11 @@ import updateProduct from "./product/update-product";
 import getProducts from "./product/get-multiple";
 import getOrders from "./order/get-multiple";
 import newOrder from "./order/new-order";
-import { Order, OrderItem } from "@prisma/client";
+import { Order } from "@prisma/client";
 import updateOrder from "./order/update-order";
 import addOrderItem from "./order/add-order-item";
 import getOrder from "./order/get-single";
+import updateOrderItem from "./order/update-order-item";
 
 const api = {
   query: {
@@ -38,6 +39,8 @@ const api = {
       updateOrder({ data }),
     addOrderItem: ({ data }: { data: OmittedOrderItem }) =>
       addOrderItem({ data }),
+    updateOrderItem: ({ data }: { data: OmittedOrderItem }) =>
+      updateOrderItem({ data }),
   },
 };
 

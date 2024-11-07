@@ -14,12 +14,14 @@ import { OrderItem } from "@prisma/client";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import AddNewOrderItem from "./add-order-item-modal";
+import UpdateOrderItem from "./update-order-item-modal";
+import { ExtededOrderItem, OmittedOrderItem } from "@/core/types";
 
 const OrderItems = () => {
   const params = useParams();
   const orderId = params.id as string;
 
-  const { data: order } = useQuery({
+  const { data: order, refetch: refetchOrder } = useQuery({
     queryKey: ["order", orderId],
     queryFn: () => api.query.getOrder(orderId),
   });
@@ -45,16 +47,23 @@ const OrderItems = () => {
         </TableHeader>
         <TableBody>
           {order?.OrderItems?.length ? (
-            order.OrderItems.map((orderItem: OrderItem) => {
+            order.OrderItems.map((orderItem: ExtededOrderItem) => {
               const product = products?.find(
                 (product) => product.id === orderItem.skuid
               );
+
               return (
                 <TableRow key={orderItem.id}>
                   <TableCell>{product?.name}</TableCell>
                   <TableCell>{orderItem.quantity}</TableCell>
                   <TableCell>{orderItem.totalPrice}</TableCell>
-                  <TableCell>Edit</TableCell>
+                  <TableCell>
+                    <UpdateOrderItem
+                      orderItem={orderItem}
+                      order={order}
+                      refetchOrder={refetchOrder}
+                    />
+                  </TableCell>
                 </TableRow>
               );
             })
