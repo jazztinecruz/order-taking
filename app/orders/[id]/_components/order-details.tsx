@@ -4,7 +4,6 @@ import api from "@/core/api";
 import Input from "@/core/components/input";
 import { OptionalOrderFields } from "@/core/types";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
-import { Customer } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
@@ -58,14 +57,16 @@ const OrderDetails = () => {
               customerId: key as string,
             })
           }>
-          {customers.map((customer) => {
-            const fullName = `${customer.firstName} ${customer.lastName}`;
-            return (
-              <AutocompleteItem key={customer.id} value={fullName}>
-                {fullName}
-              </AutocompleteItem>
-            );
-          })}
+          {customers
+            .filter((customer) => customer.isActive)
+            .map((customer) => {
+              const fullName = `${customer.firstName} ${customer.lastName}`;
+              return (
+                <AutocompleteItem key={customer.id} value={fullName}>
+                  {fullName}
+                </AutocompleteItem>
+              );
+            })}
         </Autocomplete>
       )}
 
