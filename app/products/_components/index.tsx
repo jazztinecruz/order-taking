@@ -9,8 +9,8 @@ import {
 } from "@nextui-org/react";
 import type { Product } from "@prisma/client";
 import CreateProductModal from "./create-product-modal";
-import { PRODUCTTABLEHEADERS } from "./constants";
 import UpdateProductModal from "./update-product-modal";
+import { PRODUCTTABLEHEADERS } from "@/core/constants/table";
 
 type Props = {
   products: Product[];

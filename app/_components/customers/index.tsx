@@ -8,9 +8,9 @@ import {
   TableCell,
 } from "@nextui-org/react";
 import type { Customer } from "@prisma/client";
-import { CUSTOMERTABLEHEADERS } from "../constants";
 import CreateCustomerModal from "../create-customer-modal";
 import UpdateCustomerModal from "../update-customer-modal";
+import { CUSTOMERTABLEHEADERS } from "@/core/constants/table";
 
 type Props = {
   customers: Customer[];
