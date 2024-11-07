@@ -1,7 +1,8 @@
-import type { Order, Product } from "@prisma/client";
+import { OptionalOrderFields } from "@/core/types";
+import type { Product } from "@prisma/client";
 import axios from "axios";
 
-const updateOrder = async ({ data }: { data: Order }) => {
+const updateOrder = async ({ data }: { data: OptionalOrderFields }) => {
   try {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/update-order`;
 

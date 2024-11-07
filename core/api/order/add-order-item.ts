@@ -1,7 +1,8 @@
-import type { OrderItem, Product } from "@prisma/client";
+import type { OmittedOrderItem } from "@/core/types";
+import type { Product } from "@prisma/client";
 import axios from "axios";
 
-const addOrderItem = async ({ data }: { data: OrderItem }) => {
+const addOrderItem = async ({ data }: { data: OmittedOrderItem }) => {
   try {
     const URL = `${process.env.NEXT_PUBLIC_API_URL}/add-order-item`;
 

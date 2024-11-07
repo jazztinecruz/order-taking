@@ -2,7 +2,12 @@ import addCustomer from "./customer/add-customer";
 import getCustomer from "./customer/get-customer";
 import getCustomers from "./customer/get-multiple";
 import updateCustomer from "./customer/update-customer";
-import { OmittedCustomer, OmittedProduct } from "../types";
+import {
+  OmittedCustomer,
+  OmittedOrderItem,
+  OmittedProduct,
+  OptionalOrderFields,
+} from "../types";
 import addProduct from "./product/add-product";
 import updateProduct from "./product/update-product";
 import getProducts from "./product/get-multiple";
@@ -11,6 +16,7 @@ import newOrder from "./order/new-order";
 import { Order, OrderItem } from "@prisma/client";
 import updateOrder from "./order/update-order";
 import addOrderItem from "./order/add-order-item";
+import getOrder from "./order/get-single";
 
 const api = {
   query: {
@@ -18,6 +24,7 @@ const api = {
     getCustomers: () => getCustomers(),
     getProducts: () => getProducts(),
     getOrders: () => getOrders(),
+    getOrder: (id: string) => getOrder(id),
   },
   mutation: {
     addCustomer: ({ data }: { data: OmittedCustomer }) => addCustomer({ data }),
@@ -27,8 +34,10 @@ const api = {
     updateProduct: ({ data }: { data: OmittedProduct }) =>
       updateProduct({ data }),
     newOrder: ({ data }: { data: Order | null }) => newOrder({ data }),
-    updateOrder: ({ data }: { data: Order }) => updateOrder({ data }),
-    addOrderItem: ({ data }: { data: OrderItem }) => addOrderItem({ data }),
+    updateOrder: ({ data }: { data: OptionalOrderFields }) =>
+      updateOrder({ data }),
+    addOrderItem: ({ data }: { data: OmittedOrderItem }) =>
+      addOrderItem({ data }),
   },
 };
 
