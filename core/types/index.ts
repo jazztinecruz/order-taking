@@ -2,8 +2,11 @@ import { Customer, Order, OrderItem, Product } from "@prisma/client";
 
 export type OmittedCustomer = Omit<
   Customer,
-  "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
->;
+  "id" | "createdAt" | "createdBy" | "timestamp" | "userId" | "isActive"
+> & {
+  id?: string;
+  isActive?: boolean;
+};
 
 export type OmittedProduct = Omit<
   Product,

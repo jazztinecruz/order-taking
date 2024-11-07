@@ -9,19 +9,33 @@ import { Customer } from "@prisma/client";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { customerSchema } from "@/core/schemas/customer";
 
 type Props = {
   customer: Customer;
 };
 
 const UpdateCustomerModal = ({ customer }: Props) => {
-  const [customerData, setCustomerData] = useState({
-    ...customer,
-    isActive: customer.isActive || false,
-  });
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(customerSchema),
+    defaultValues: {
+      firstName: customer.firstName,
+      lastName: customer.lastName,
+      phoneNumber: customer.phoneNumber,
+      city: customer.city,
+      isActive: customer.isActive || false,
+    },
+  });
 
   const { mutate: updateCustomer, isPending } = useMutation({
     mutationFn: (data: OmittedCustomer) =>
@@ -35,71 +49,54 @@ const UpdateCustomerModal = ({ customer }: Props) => {
     },
   });
 
-  const handleUpdateCustomer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    updateCustomer(customerData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value, type, checked } = e.target;
-    setCustomerData({
-      ...customerData,
-      [name]: type === "checkbox" ? checked : value,
-    });
+  const onSubmit = (data: OmittedCustomer) => {
+    updateCustomer({ ...data, id: customer.id, isActive: watch("isActive") });
   };
 
   return (
     <>
       <Button onClick={() => setIsModalOpen(true)}>Edit</Button>
       <Modal
-        title="Create Customer"
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}>
-        <form className="space-y-4">
+        onClose={() => setIsModalOpen(false)}
+        title="Edit Customer">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <Input
-            label="First Name"
             id="firstName"
-            name="firstName"
-            defaultValue={customerData.firstName}
-            onChange={handleChange}
+            label="First Name"
             required
+            {...register("firstName")}
+            errorMessage={errors.firstName?.message}
           />
           <Input
-            label="Last Name"
             id="lastName"
-            name="lastName"
-            defaultValue={customerData.lastName}
-            onChange={handleChange}
+            label="Last Name"
             required
+            {...register("lastName")}
+            errorMessage={errors.lastName?.message}
           />
           <Input
-            label="Phone Number"
             id="phoneNumber"
-            name="phoneNumber"
-            defaultValue={customerData.phoneNumber}
-            onChange={handleChange}
+            label="Phone Number"
             required
+            {...register("phoneNumber")}
+            errorMessage={errors.phoneNumber?.message}
           />
           <Input
-            label="City"
             id="city"
-            name="city"
-            defaultValue={customerData.city}
-            placeholder="New York"
-            onChange={handleChange}
+            label="City"
             required
+            {...register("city")}
+            errorMessage={errors.city?.message}
           />
-
           <Input
-            label="Active"
             id="isActive"
-            name="isActive"
+            label="Active"
+            {...register("isActive")}
             type="checkbox"
-            checked={customerData.isActive}
-            onChange={handleChange}
+            errorMessage={errors.isActive?.message}
           />
-
-          <Button onClick={(e) => handleUpdateCustomer(e)} disabled={isPending}>
+          <Button type="submit" disabled={isPending}>
             Update Customer
           </Button>
         </form>
