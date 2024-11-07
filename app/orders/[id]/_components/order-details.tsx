@@ -4,6 +4,7 @@ import api from "@/core/api";
 import Input from "@/core/components/input";
 import { OptionalOrderFields } from "@/core/types";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
+import { OrderStatus } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
@@ -69,6 +70,24 @@ const OrderDetails = () => {
             })}
         </Autocomplete>
       )}
+
+      <Autocomplete
+        label="Select Status"
+        className="max-w-xs"
+        placeholder="Select Customer"
+        defaultInputValue={order?.status || "Select Status"}
+        onSelectionChange={(key) =>
+          updateOrder({
+            id: orderId,
+            status: key as OrderStatus,
+          })
+        }>
+        {Object.values(OrderStatus).map((status) => (
+          <AutocompleteItem key={status} value={status}>
+            {status}
+          </AutocompleteItem>
+        ))}
+      </Autocomplete>
 
       <Input
         id="dateOfDelivery"

@@ -75,6 +75,7 @@ const AddNewOrderItem = ({ order }: Props) => {
           0
         ) + Number(itemData.totalPrice)
       ),
+      isActive: true,
     });
   };
 
