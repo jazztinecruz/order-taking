@@ -4,10 +4,13 @@ import api from "@/core/api";
 import Button from "@/core/components/button";
 import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
+import { customerSchema } from "@/core/schemas/customer";
 import { OmittedCustomer } from "@/core/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const initialCustomerData: OmittedCustomer = {
   firstName: "",
@@ -17,8 +20,15 @@ const initialCustomerData: OmittedCustomer = {
 };
 
 const CreateCustomerModal = () => {
-  const [customerData, setCustomerData] =
-    useState<OmittedCustomer>(initialCustomerData);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<OmittedCustomer>({
+    resolver: zodResolver(customerSchema),
+    defaultValues: initialCustomerData,
+  });
 
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const router = useRouter();
@@ -27,7 +37,7 @@ const CreateCustomerModal = () => {
     mutationFn: (data: OmittedCustomer) => api.mutation.addCustomer({ data }),
     onSuccess: () => {
       setIsCreateModalOpen(false);
-      setCustomerData(initialCustomerData);
+      reset(initialCustomerData);
       router.refresh();
     },
     onError: (error) => {
@@ -35,17 +45,8 @@ const CreateCustomerModal = () => {
     },
   });
 
-  const handleAddCustomer = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    addCustomer(customerData);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setCustomerData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+  const onSubmit = (data: OmittedCustomer) => {
+    addCustomer(data);
   };
 
   return (
@@ -55,42 +56,37 @@ const CreateCustomerModal = () => {
         title="Create Customer"
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}>
-        <form className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
           <Input
             label="First Name"
             id="firstName"
-            name="firstName"
-            value={customerData.firstName}
-            onChange={handleChange}
+            {...register("firstName")}
+            errorMessage={errors.firstName?.message}
             required
           />
           <Input
             label="Last Name"
             id="lastName"
-            name="lastName"
-            value={customerData.lastName}
-            onChange={handleChange}
+            {...register("lastName")}
+            errorMessage={errors.lastName?.message}
             required
           />
           <Input
             label="Phone Number"
             id="phoneNumber"
-            name="phoneNumber"
-            value={customerData.phoneNumber}
-            onChange={handleChange}
+            {...register("phoneNumber")}
+            errorMessage={errors.phoneNumber?.message}
             required
           />
           <Input
             label="City"
             id="city"
-            name="city"
-            value={customerData.city}
-            placeholder="New York"
-            onChange={handleChange}
+            {...register("city")}
+            errorMessage={errors.city?.message}
             required
           />
-          <Button onClick={(e) => handleAddCustomer(e)} disabled={isPending}>
-            Create Customer
+          <Button type="submit" disabled={isPending}>
+            Add Customer
           </Button>
         </form>
       </Modal>
