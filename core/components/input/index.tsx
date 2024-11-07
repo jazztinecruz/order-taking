@@ -30,7 +30,7 @@ const Input: React.FC<InputProps> = ({ label, id, errorMessage, ...props }) => {
       <input
         id={id}
         {...props}
-        className={`w-full p-2 border border-gray-300 rounded-md ${props.className}`}
+        className={`w-full p-2 border border-gray-300 rounded-md disabled:bg-gray-100 ${props.className}`}
       />
       {errorMessage && <p className="text-red-500 text-sm">{errorMessage}</p>}
     </div>

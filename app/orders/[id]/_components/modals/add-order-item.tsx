@@ -137,6 +137,7 @@ const AddNewOrderItem = ({ order }: Props) => {
             name="totalPrice"
             type="number"
             readOnly
+            disabled
             value={itemData.totalPrice}
             required
           />

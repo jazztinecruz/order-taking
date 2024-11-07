@@ -8,7 +8,7 @@ const Sidebar = () => {
   const pathname = usePathname();
   return (
     <aside className="w-52 p-4 border-r-2">
-      <ul className="flex items-center flex-col gap-4">
+      <ul className="flex items-center flex-col gap-1">
         {SIDEBARLINKS.map((link) => {
           const isActive = pathname === link.url;
           return (
