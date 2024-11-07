@@ -4,20 +4,20 @@ import api from "@/core/api";
 import Button from "@/core/components/button";
 import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
-import { OmittedOrderItem, OmittedProduct } from "@/core/types";
+import { ExtendedOrder, OmittedOrderItem, OmittedProduct } from "@/core/types";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
 import { useState } from "react";
 
-const AddNewOrderItem = () => {
-  const params = useParams();
-  const orderId = params.id as string;
+type Props = {
+  order: ExtendedOrder;
+};
 
+const AddNewOrderItem = ({ order }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<OmittedProduct>();
   const [itemData, setItemData] = useState<OmittedOrderItem>({
-    orderId,
+    orderId: order.id,
     quantity: 0,
     skuid: "",
     totalPrice: "",
@@ -42,6 +42,16 @@ const AddNewOrderItem = () => {
     },
   });
 
+  const availableProductsToOrder =
+    products
+      ?.filter((product) => product.isActive)
+      .filter(
+        (product) =>
+          !order.OrderItems?.some(
+            (orderedItem) => orderedItem.skuid === product.id
+          )
+      ) || [];
+
   if (isLoading) return <div>Fetching Products ...</div>;
 
   return (
@@ -63,13 +73,11 @@ const AddNewOrderItem = () => {
                 });
                 setSelectedProduct(products.find((p) => p.id === key));
               }}>
-              {products
-                .filter((product) => product.isActive)
-                .map((product) => (
-                  <AutocompleteItem key={product.id} value={product.name}>
-                    {product.name}
-                  </AutocompleteItem>
-                ))}
+              {availableProductsToOrder.map((product) => (
+                <AutocompleteItem key={product.id} value={product.name}>
+                  {product.name}
+                </AutocompleteItem>
+              ))}
             </Autocomplete>
           )}
           <Input

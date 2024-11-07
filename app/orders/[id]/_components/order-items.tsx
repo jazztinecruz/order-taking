@@ -33,7 +33,7 @@ const OrderItems = () => {
 
   return (
     <div className="space-y-6">
-      <AddNewOrderItem />
+      <AddNewOrderItem order={order} />
 
       <Table aria-label="Order data table">
         <TableHeader>
