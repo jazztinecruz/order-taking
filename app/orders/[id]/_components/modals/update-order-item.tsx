@@ -96,7 +96,6 @@ const UpdateOrderItem = ({ orderItem, order, refetchOrder }: Props) => {
             name="totalPrice"
             readOnly
             value={itemData.totalPrice}
-            required
           />
 
           <Button onClick={handleUpdateOrderItem} disabled={isPending}>

@@ -139,7 +139,6 @@ const AddNewOrderItem = ({ order }: Props) => {
             readOnly
             disabled
             value={itemData.totalPrice}
-            required
           />
 
           <Button onClick={handleAddOrderItem}>Add Order Item</Button>

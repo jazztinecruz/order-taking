@@ -69,7 +69,7 @@ const OrdersRecord = ({ orders }: Props) => {
               <TableCell>{order.totalAmount}</TableCell>
               <TableCell>
                 <Link href={`/orders/${order.id}`} className="hover:underline">
-                  Edit
+                  <Button>Edit</Button>
                 </Link>
               </TableCell>
             </TableRow>
