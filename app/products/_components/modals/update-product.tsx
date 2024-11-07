@@ -92,6 +92,7 @@ const UpdateProductModal = ({ product }: Props) => {
             alt={product.name}
             width={100}
             height={100}
+            className="rounded-md"
           />
 
           <Input

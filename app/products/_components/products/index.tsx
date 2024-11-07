@@ -42,6 +42,7 @@ const ProductsRecord = ({ products }: Props) => {
                   alt={product.name}
                   width={50}
                   height={50}
+                  className="rounded-md"
                 />
               </TableCell>
               <TableCell>

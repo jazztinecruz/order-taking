@@ -66,8 +66,8 @@ const OrderItems = () => {
                     <Image
                       src={product?.imageUrl || "/no-image.png"}
                       alt="Product Image"
-                      width={75}
-                      height={75}
+                      width={50}
+                      height={50}
                       className="rounded-md"
                     />
                   </TableCell>
