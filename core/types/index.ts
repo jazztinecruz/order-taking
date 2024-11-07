@@ -12,6 +12,7 @@ export type OmittedProduct = Omit<
   Product,
   "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
 > & {
+  id?: string;
   imageUrl?: string | null;
 };
 

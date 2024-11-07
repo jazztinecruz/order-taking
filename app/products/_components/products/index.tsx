@@ -8,8 +8,8 @@ import {
   TableCell,
 } from "@nextui-org/react";
 import type { Product } from "@prisma/client";
-import CreateProductModal from "./create-product-modal";
-import UpdateProductModal from "./update-product-modal";
+import CreateProductModal from "../modals/create-product";
+import UpdateProductModal from "../modals/update-product";
 import { PRODUCTTABLEHEADERS } from "@/core/constants/table";
 import Image from "next/image";
 
