@@ -13,6 +13,7 @@ import {
 import grabError from "@/core/util/grab-error";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
@@ -21,6 +22,7 @@ type Props = {
 };
 
 const AddNewOrderItem = ({ order }: Props) => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<OmittedProduct>();
   const [itemData, setItemData] = useState<OmittedOrderItem>({
@@ -52,6 +54,7 @@ const AddNewOrderItem = ({ order }: Props) => {
     onSuccess: () => {
       toast.success("Order Item added successfully");
       refetchProducts();
+      router.refresh();
     },
     onError: (error) => {
       grabError(error);
