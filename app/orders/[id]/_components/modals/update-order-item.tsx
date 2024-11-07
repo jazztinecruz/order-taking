@@ -51,6 +51,8 @@ const UpdateOrderItem = ({ orderItem, order, refetchOrder }: Props) => {
   });
 
   const handleUpdateOrderItem = () => {
+    if (itemData.quantity <= 0) return;
+
     updateOrderItem(itemData, {
       onSuccess: (data) => {
         updateOrder({

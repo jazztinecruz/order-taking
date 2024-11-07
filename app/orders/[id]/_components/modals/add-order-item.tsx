@@ -69,7 +69,7 @@ const AddNewOrderItem = ({ order }: Props) => {
       ) || [];
 
   const handleAddOrderItem = () => {
-    if (!selectedProduct) return;
+    if (!selectedProduct || itemData.quantity <= 0) return;
 
     addOrderItem(itemData);
     updateOrder({
