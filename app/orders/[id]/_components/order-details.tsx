@@ -8,13 +8,14 @@ import { Customer } from "@prisma/client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 
-type Props = {
-  customers: Customer[] | undefined;
-};
-
-const OrderDetails = ({ customers }: Props) => {
+const OrderDetails = () => {
   const params = useParams();
   const orderId = params.id as string;
+
+  const { data: customers } = useQuery({
+    queryKey: ["customers"],
+    queryFn: () => api.query.getCustomers(),
+  });
 
   const {
     data: order,

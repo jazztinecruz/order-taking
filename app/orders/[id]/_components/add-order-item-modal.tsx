@@ -4,7 +4,12 @@ import api from "@/core/api";
 import Button from "@/core/components/button";
 import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
-import { ExtendedOrder, OmittedOrderItem, OmittedProduct } from "@/core/types";
+import {
+  ExtendedOrder,
+  OmittedOrderItem,
+  OmittedProduct,
+  OptionalOrderFields,
+} from "@/core/types";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -26,16 +31,24 @@ const AddNewOrderItem = ({ order }: Props) => {
   const {
     data: products,
     isLoading,
-    refetch: refetchOrder,
+    refetch: refetchProducts,
   } = useQuery({
     queryKey: ["products"],
     queryFn: () => api.query.getProducts(),
   });
 
+  const { mutate: updateOrder } = useMutation({
+    mutationFn: (data: OptionalOrderFields) =>
+      api.mutation.updateOrder({ data }),
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   const { mutate: addOrderItem } = useMutation({
     mutationFn: (data: OmittedOrderItem) => api.mutation.addOrderItem({ data }),
     onSuccess: () => {
-      refetchOrder();
+      refetchProducts();
     },
     onError: (error) => {
       console.error(error);
@@ -51,6 +64,19 @@ const AddNewOrderItem = ({ order }: Props) => {
             (orderedItem) => orderedItem.skuid === product.id
           )
       ) || [];
+
+  const handleAddOrderItem = () => {
+    addOrderItem(itemData);
+    updateOrder({
+      id: order.id,
+      totalAmount: String(
+        order.OrderItems.reduce(
+          (acc, item) => acc + Number(item.totalPrice),
+          0
+        ) + Number(itemData.totalPrice)
+      ),
+    });
+  };
 
   if (isLoading) return <div>Fetching Products ...</div>;
 
@@ -86,6 +112,7 @@ const AddNewOrderItem = ({ order }: Props) => {
             type="number"
             name="quantity"
             value={itemData.quantity}
+            min={1}
             onChange={(e) => {
               const quantity = Number(e.target.value);
               const unitPrice = selectedProduct?.unitPrice || 1;
@@ -107,7 +134,7 @@ const AddNewOrderItem = ({ order }: Props) => {
             required
           />
 
-          <Button onClick={() => addOrderItem(itemData)}>Add Order Item</Button>
+          <Button onClick={handleAddOrderItem}>Add Order Item</Button>
         </form>
       </Modal>
     </>

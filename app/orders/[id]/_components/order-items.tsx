@@ -70,6 +70,10 @@ const OrderItems = () => {
           )}
         </TableBody>
       </Table>
+
+      <h2 className="text-bold text-lg">
+        Total Amount: {order.totalAmount || 0}
+      </h2>
     </div>
   );
 };
