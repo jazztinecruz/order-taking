@@ -13,6 +13,7 @@ const initialProductData: OmittedProduct = {
   name: "",
   code: "",
   unitPrice: "",
+  imageUrl: "",
 };
 
 const CreateProductModal = () => {

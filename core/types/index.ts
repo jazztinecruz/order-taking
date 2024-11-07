@@ -9,7 +9,7 @@ export type OmittedProduct = Omit<
   Product,
   "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
 > & {
-  imageUrl?: string;
+  imageUrl?: string | null;
 };
 
 export type OptionalOrderFields = Partial<Order>;
