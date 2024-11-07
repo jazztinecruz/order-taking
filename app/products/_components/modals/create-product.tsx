@@ -10,9 +10,8 @@ import grabError from "@/core/util/grab-error";
 import handleUpload from "@/core/util/upload";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { PutBlobResult } from "@vercel/blob";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
