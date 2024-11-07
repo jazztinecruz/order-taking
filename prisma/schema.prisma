@@ -24,25 +24,64 @@ model Customer {
   isActive    Boolean?  @default(true)
   createdAt   DateTime? @default(now())
   createdBy   String?   @default("system")
-  timestamp   DateTime? @default(now())
+  timestamp   DateTime? @updatedAt
+  orders      Order[]
 }
 
 model User {
-  id       String     @id @default(cuid())
-  email    String     @unique
-  Customer Customer[]
-  Product  Product[]
+  id         String       @id @default(cuid())
+  email      String       @unique
+  customers  Customer[]
+  products   Product[]
+  orders     Order[]
+  OrderItems OrderItems[]
 }
 
 model Product {
-  id        String    @id @default(cuid())
-  name      String    @unique
-  code      String    @unique
-  unitPrice String
-  userId    String?
-  isActive  Boolean?  @default(true)
-  createdAt DateTime? @default(now())
-  createdBy String?   @default("system")
-  timestamp DateTime? @default(now())
-  User      User?     @relation(fields: [userId], references: [id])
+  id         String       @id @default(cuid())
+  name       String       @unique
+  code       String       @unique
+  unitPrice  String
+  userId     String?
+  isActive   Boolean?     @default(true)
+  createdAt  DateTime?    @default(now())
+  createdBy  String?      @default("system")
+  timestamp  DateTime?    @updatedAt
+  User       User?        @relation(fields: [userId], references: [id])
+  OrderItems OrderItems[]
+}
+
+model Order {
+  id             String       @id @default(cuid())
+  customerId     String
+  customer       Customer     @relation(fields: [customerId], references: [id])
+  dateOfDelivery DateTime
+  status         OrderStatus  @default(NEW)
+  totalAmount    String
+  createdAt      DateTime?    @default(now())
+  createdBy      String?      @default("system")
+  timestamp      DateTime?    @updatedAt
+  userId         String
+  User           User         @relation(fields: [userId], references: [id])
+  isActive       Boolean?     @default(false)
+  OrderItems     OrderItems[]
+}
+
+model OrderItems {
+  id         String    @id @default(cuid())
+  orderId    String
+  order      Order     @relation(fields: [orderId], references: [id])
+  skuid      String
+  sku        Product   @relation(fields: [skuid], references: [id])
+  quantity   Int
+  totalPrice String
+  timestamp  DateTime? @updatedAt
+  userId     String
+  User       User      @relation(fields: [userId], references: [id])
+}
+
+enum OrderStatus {
+  NEW
+  COMPLETED
+  CANCELLED
 }
