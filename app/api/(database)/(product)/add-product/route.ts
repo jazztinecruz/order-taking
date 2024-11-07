@@ -6,6 +6,7 @@ export const POST = async (req: NextRequest) => {
   const body = await req.json();
   const { data } = body as { data: Product };
 
+  console.log(body);
   try {
     const existingCode = await prisma.product.findUnique({
       where: {
@@ -35,6 +36,7 @@ export const POST = async (req: NextRequest) => {
     const newProduct = await prisma.product.create({
       data: {
         ...data,
+        unitPrice: String(data.unitPrice),
         userId: "cm35n1amz000012i5okizpc72",
       },
     });

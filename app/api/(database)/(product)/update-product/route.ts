@@ -38,6 +38,7 @@ export const PUT = async (req: NextRequest) => {
       },
       data: {
         ...data,
+        unitPrice: String(data.unitPrice),
         userId: "cm35n1amz000012i5okizpc72",
       },
     });
