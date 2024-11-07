@@ -28,7 +28,7 @@ const Input: React.FC<InputProps> = ({ label, id, ...props }) => {
       <input
         id={id}
         {...props}
-        className="w-full p-2 border border-gray-300 rounded-md"
+        className={`w-full p-2 border border-gray-300 rounded-md ${props.className}`}
       />
     </div>
   );

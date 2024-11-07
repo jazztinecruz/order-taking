@@ -1,4 +1,4 @@
-import { Customer, Order, Product } from "@prisma/client";
+import { Customer, Order, OrderItem, Product } from "@prisma/client";
 
 export type OmittedCustomer = Omit<
   Customer,
@@ -10,6 +10,10 @@ export type OmittedProduct = Omit<
   "id" | "createdAt" | "createdBy" | "isActive" | "timestamp" | "userId"
 >;
 
+export type OptionalOrderFields = Partial<Order>;
 export type ExtendedOrder = Order & {
   customer: OmittedCustomer;
+  OrderItems: OrderItem[];
 };
+
+export type OmittedOrderItem = Omit<OrderItem, "id" | "userId" | "timestamp">;
