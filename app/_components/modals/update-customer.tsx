@@ -12,6 +12,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { customerSchema } from "@/core/schemas/customer";
+import toast from "react-hot-toast";
+import grabError from "@/core/util/grab-error";
 
 type Props = {
   customer: Customer;
@@ -41,11 +43,12 @@ const UpdateCustomerModal = ({ customer }: Props) => {
     mutationFn: (data: OmittedCustomer) =>
       api.mutation.updateCustomer({ data }),
     onSuccess: () => {
+      toast.success("Customer updated successfully");
       setIsModalOpen(false);
       router.refresh();
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: Error) => {
+      grabError(error);
     },
   });
 

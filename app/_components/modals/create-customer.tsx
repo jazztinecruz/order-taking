@@ -6,11 +6,13 @@ import Input from "@/core/components/input";
 import Modal from "@/core/components/modal";
 import { customerSchema } from "@/core/schemas/customer";
 import { OmittedCustomer } from "@/core/types";
+import grabError from "@/core/util/grab-error";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const initialCustomerData: OmittedCustomer = {
   firstName: "",
@@ -36,12 +38,13 @@ const CreateCustomerModal = () => {
   const { mutate: addCustomer, isPending } = useMutation({
     mutationFn: (data: OmittedCustomer) => api.mutation.addCustomer({ data }),
     onSuccess: () => {
+      toast.success("Customer added successfully!");
       setIsCreateModalOpen(false);
       reset(initialCustomerData);
       router.refresh();
     },
-    onError: (error) => {
-      console.error(error);
+    onError: (error: Error) => {
+      grabError(error);
     },
   });
 
