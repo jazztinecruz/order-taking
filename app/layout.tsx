@@ -31,7 +31,7 @@ const RootLayout = ({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <div className="grid grid-cols-[auto,1fr] gap-4 min-h-screen">
+        <div className="flex flex-col lg:grid lg:grid-cols-[auto,1fr] gap-4 min-h-screen">
           <Sidebar />
           <main className="p-4">
             <Providers>
