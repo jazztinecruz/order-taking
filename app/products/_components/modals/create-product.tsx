@@ -97,6 +97,7 @@ const CreateProductModal = () => {
           <Input
             label="Unit Price"
             type="number"
+            min={1}
             id="unitPrice"
             {...register("unitPrice")}
             errorMessage={errors.unitPrice?.message}

@@ -113,6 +113,7 @@ const UpdateProductModal = ({ product }: Props) => {
             label="Unit Price"
             type="number"
             id="unitPrice"
+            min={1}
             {...register("unitPrice")}
             errorMessage={errors.unitPrice?.message}
             required
