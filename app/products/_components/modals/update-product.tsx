@@ -37,6 +37,7 @@ const UpdateProductModal = ({ product }: Props) => {
       unitPrice: product.unitPrice,
       id: product.id,
       imageUrl: product.imageUrl,
+      isActive: product.isActive,
     },
   });
 
@@ -59,7 +60,12 @@ const UpdateProductModal = ({ product }: Props) => {
   });
 
   const handleUpdateProduct = (data: OmittedProduct) => {
-    updateProduct({ ...data, id: product.id, imageUrl: watch("imageUrl") });
+    updateProduct({
+      ...data,
+      id: product.id,
+      imageUrl: watch("imageUrl"),
+      isActive: watch("isActive"),
+    });
   };
 
   return (
@@ -117,6 +123,13 @@ const UpdateProductModal = ({ product }: Props) => {
             {...register("unitPrice")}
             errorMessage={errors.unitPrice?.message}
             required
+          />
+          <Input
+            id="isActive"
+            label="Active"
+            {...register("isActive")}
+            type="checkbox"
+            errorMessage={errors.isActive?.message}
           />
           <Button type="submit" disabled={isPending}>
             Update Product

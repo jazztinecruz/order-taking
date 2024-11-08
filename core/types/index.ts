@@ -14,6 +14,7 @@ export type OmittedProduct = Omit<
 > & {
   id?: string;
   imageUrl?: string | null;
+  isActive?: boolean | null;
 };
 
 export type OptionalOrderFields = Partial<Order>;
