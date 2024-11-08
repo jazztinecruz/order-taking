@@ -17,9 +17,10 @@ type Props = {
   orderItem: ExtededOrderItem;
   order: ExtendedOrder;
   refetchOrder: () => void;
+  name: string;
 };
 
-const UpdateOrderItem = ({ orderItem, order, refetchOrder }: Props) => {
+const UpdateOrderItem = ({ orderItem, order, refetchOrder, name }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [itemData, setItemData] = useState<OmittedOrderItem>({
@@ -77,6 +78,8 @@ const UpdateOrderItem = ({ orderItem, order, refetchOrder }: Props) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}>
         <div className="space-y-4">
+          <Input id="name" label="SKU" value={name} readOnly disabled />
+
           <Input
             id="quantity"
             label="Quantity"

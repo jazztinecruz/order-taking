@@ -76,6 +76,7 @@ const OrderItems = () => {
                       orderItem={orderItem}
                       order={order}
                       refetchOrder={refetchOrder}
+                      name={product?.name as string}
                     />
                   </TableCell>
                 </TableRow>
