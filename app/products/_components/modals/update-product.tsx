@@ -49,10 +49,9 @@ const UpdateProductModal = ({ product }: Props) => {
   const { mutate: updateProduct, isPending } = useMutation({
     mutationFn: (data: OmittedProduct) => api.mutation.updateProduct({ data }),
     onSuccess: () => {
+      router.refresh();
       toast.success("Product added successfully!");
       setIsCreateModalOpen(false);
-      reset();
-      router.refresh();
     },
     onError: (error: Error) => {
       grabError(error);
