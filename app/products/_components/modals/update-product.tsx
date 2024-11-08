@@ -27,7 +27,6 @@ const UpdateProductModal = ({ product }: Props) => {
     handleSubmit,
     formState: { errors },
     setValue,
-    reset,
     watch,
   } = useForm<OmittedProduct>({
     resolver: zodResolver(productSchema),
@@ -50,7 +49,7 @@ const UpdateProductModal = ({ product }: Props) => {
     mutationFn: (data: OmittedProduct) => api.mutation.updateProduct({ data }),
     onSuccess: () => {
       router.refresh();
-      toast.success("Product added successfully!");
+      toast.success("Product Updated successfully!");
       setIsCreateModalOpen(false);
     },
     onError: (error: Error) => {
